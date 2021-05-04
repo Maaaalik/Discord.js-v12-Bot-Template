@@ -1,4 +1,4 @@
-# Discord Bot Templat
+# Discord Bot Template
 
 ## HANDLER SYLE
 
