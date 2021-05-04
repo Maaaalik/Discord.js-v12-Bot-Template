@@ -1,10 +1,8 @@
-
 const db = require("quick.db")
-require("dotenv").config()
 const { addexp } = require("../handlers/xp.js");
+const { ownerID, default_prefix } = require("../config.json");
+const { badwords } = require("../data.json") 
 let cooldown = {}
-
-
 
 module.exports.run = async (client, message) => {
   if (message.author.bot) return;
@@ -15,13 +13,24 @@ module.exports.run = async (client, message) => {
   if (!message.member.hasPermission("ADMINISTRATOR")) {
 
 
-  
-      }
-    
-  let prefix = db.get(`prefix_${message.guild.id}`);
 
-  if (prefix === null) prefix = process.env.default_prefix
- 
+    message.content.split(" ").forEach(m => {
+      if (is_url(m)) {
+        message.delete().catch(err => {})
+        return message.channel.send("You are not allowed to send links :/")
+      } else if (badwords.find(x => x.toLowerCase() === m.toLowerCase())) {
+
+        message.delete().catch(err => {})
+        return message.channel.send("You are not allowed to use (**" + m + "**) word here")
+
+      }
+    })
+
+  }
+
+  let prefix = db.get(`prefix_${message.guild.id}`);
+  if (prefix === null) prefix = default_prefix;
+
   if (!message.content.startsWith(prefix)) return;
 
   if (!message.member)
@@ -51,7 +60,7 @@ module.exports.run = async (client, message) => {
   if (!command) return;
 
   //-------------------------------------------- P E R M I S S I O N -------------------------------------------
-  
+
 
 
   if (command.botPermission) {
@@ -76,7 +85,7 @@ module.exports.run = async (client, message) => {
   // ---------------------------------------------O W N E R ----------------------------------------------------------
 
   if (command.ownerOnly) {
-    if (message.author.id !== "422382504226324491") return message.channel.send("This command can only be use by owner :C")
+    if (message.author.id !== ownerID) return message.channel.send("This command can only be use by owner :C")
   }
 
   //------------------------------------------------------COOLDOWN SYSTEM---------------------------------------------
@@ -99,7 +108,7 @@ module.exports.run = async (client, message) => {
   //-----------------------------------------------------------------------------------------------------------------
 
   if (command) command.run(client, message, args);
-
+ 
 
 
 
@@ -119,4 +128,3 @@ function is_url(str) {
   }
   
 }
-
