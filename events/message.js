@@ -1,7 +1,6 @@
 const db = require("quick.db")
 const { addexp } = require("../handlers/xp.js");
 const { ownerID, default_prefix } = require("../config.json");
-const { badwords } = require("../data.json") 
 let cooldown = {}
 
 module.exports.run = async (client, message) => {
@@ -11,22 +10,6 @@ module.exports.run = async (client, message) => {
   addexp(message);
 
   if (!message.member.hasPermission("ADMINISTRATOR")) {
-
-
-
-    message.content.split(" ").forEach(m => {
-      if (is_url(m)) {
-        message.delete().catch(err => {})
-        return message.channel.send("You are not allowed to send links :/")
-      } else if (badwords.find(x => x.toLowerCase() === m.toLowerCase())) {
-
-        message.delete().catch(err => {})
-        return message.channel.send("You are not allowed to use (**" + m + "**) word here")
-
-      }
-    })
-
-  }
 
   let prefix = db.get(`prefix_${message.guild.id}`);
   if (prefix === null) prefix = default_prefix;
