@@ -2,4 +2,7 @@
   "token": "TOKEN",
   "default_prefix": "PREFIX",
   "ownerID": "Owner ID"
+  "developer":"YOUR NAME",
+  "commands":"HOW MUCH",
+  "version":"v.1.0.0",
 }
