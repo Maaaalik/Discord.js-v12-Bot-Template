@@ -24,8 +24,6 @@ description: "Nothing",
 
 ```
 
-```
 
 * ©️ 2021 Malik - This project is licensed under the [Apache License 2.0](https://github.com/Malik-4444/Discord.js-Bot-Template/LICENSE.md) License
 
-```
